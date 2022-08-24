@@ -1,14 +1,9 @@
-FROM debian:sid
+FROM debian:latest
 
 MAINTAINER Nicolas Delaby "nicolas@ezeep.com"
 
 # Install cups
 RUN apt-get update && apt-get install cups cups-pdf whois -y && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-# Disbale some cups backend that are unusable within a container
-RUN mv /usr/lib/cups/backend/parallel /usr/lib/cups/backend-available/ &&\
-    mv /usr/lib/cups/backend/serial /usr/lib/cups/backend-available/ &&\
-    mv /usr/lib/cups/backend/usb /usr/lib/cups/backend-available/
 
 ADD etc-cups /etc/cups
 RUN mkdir -p /etc/cups/ssl
